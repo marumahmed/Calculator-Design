@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="calculator">
+        <div class="calculator_body">
+            <div class="calculator_result">
+                <h2 class="result">0</h2>
+            </div>
+            <div class="calculator_btn">
+                <!-- Button Line one -->
+                <div class="btn_line .one"> 
+                    <div class="line_one">
+                        <h5 class="btn_value">C</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value add">+/-</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">%</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">/</h5>
+                    </div>
+                </div>
+                <!-- Button Line Two  -->
+                <div class="btn_line .two">
+                    <div class="line_one">
+                        <h5 class="btn_value">7</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">8</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">9</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">X</h5>
+                    </div>
+                </div>
+                <!-- Button line three -->
+                <div class="btn_line .three">
+                    <div class="line_one">
+                        <h5 class="btn_value">4</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">5</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">6</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">-</h5>
+                    </div>
+                </div>
+                <!-- Button line Four -->
+                <div class="btn_line .four">
+                    <div class="line_one">
+                        <h5 class="btn_value">1</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">2</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">3</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">+</h5>
+                    </div>
+                </div>
+                <!-- Button line Five -->
+                <div class="btn_line .five">
+                    <div class="line_one">
+                        <h5 class="btn_value">0</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">.</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value del">del</h5>
+                    </div>
+                    <div class="line_one">
+                        <h5 class="btn_value">=</h5>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- JS Coding -->
+
+    <script>
+        // JavaScript code for the calculator
+
+// Select all the necessary elements
+const buttons = document.querySelectorAll('.btn_value'); // Select all buttons
+const resultDisplay = document.querySelector('.result'); // Select the result display
+
+let currentInput = ''; // Stores the current input
+let previousInput = ''; // Stores the previous input
+let operator = ''; // Stores the selected operator
+
+// Function to handle button clicks
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.textContent;
+
+        // Check if the clicked button is a number or a decimal
+        if (!isNaN(value) || value === '.') {
+            currentInput += value;
+            resultDisplay.textContent = currentInput;
+        }
+
+        // If an operator is clicked
+        if (value === '+' || value === '-' || value === 'X' || value === '/') {
+            previousInput = currentInput;
+            operator = value;
+            currentInput = ''; // Clear the current input for the next number
+        }
+
+        // If equal sign is clicked, perform the calculation
+        if (value === '=') {
+            let result;
+            const prev = parseFloat(previousInput);
+            const current = parseFloat(currentInput);
+
+            if (operator === '+') {
+                result = prev + current;
+            } else if (operator === '-') {
+                result = prev - current;
+            } else if (operator === 'X') {
+                result = prev * current;
+            } else if (operator === '/') {
+                result = prev / current;
+            }
+
+            resultDisplay.textContent = result; // Display the result
+            currentInput = result; // Store the result as the next input
+            operator = ''; // Reset the operator
+        }
+
+        // Clear the display when 'C' is clicked
+        if (value === 'C') {
+            currentInput = '';
+            previousInput = '';
+            operator = '';
+            resultDisplay.textContent = '0';
+        }
+
+        // Handle delete (del) functionality
+        if (value === 'del') {
+            currentInput = currentInput.slice(0, -1);
+            resultDisplay.textContent = currentInput || '0'; // Show '0' if empty
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
